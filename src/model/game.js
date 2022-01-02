@@ -26,18 +26,21 @@ export class Game {
     this.ticker.add((delta) => {
       this.renderer.render(this.stage);
       if (this.isPlaying) {
-        this.isPlaying = !this.duet.collision(this.blocks);
-        this.duet.move();
-        this.elapsed++;
-        if (this.elapsed >= constants.ELAPSED_TICK) {
-          this.readBlocks(line);
-          this.elapsed = 0;
-        }
+        if (this.duet.collision(this.blocks)) {
+          this.isPlaying = false;
+        } else {
+          this.duet.move();
+          this.elapsed++;
+          if (this.elapsed >= constants.ELAPSED_TICK) {
+            this.readBlocks(line);
+            this.elapsed = 0;
+          }
 
-        this.blocks.forEach(block => block.fall());
-    
-        this.resetPositions();
-        line = line === this.round.length - 1? 0: line + 1;      
+          this.blocks.forEach(block => block.fall());
+      
+          this.resetPositions();
+          line = line === this.round.length - 1? 0: line + 1;     
+        } 
       }
     });
   }
@@ -67,8 +70,10 @@ export class Game {
       const block = this.blocks[i];
       if (block) {
         if (block.pixi.y > window.innerHeight) {
-          block.pixi.destroy();
-          delete this.blocks[i];
+          setTimeout (() => {
+            block.pixi.destroy();
+            delete this.blocks[i];
+          }, 3000);
         }
       }
     }

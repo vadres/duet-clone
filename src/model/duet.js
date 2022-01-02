@@ -1,18 +1,7 @@
 import { keyboard } from '../utils/keyboard';
 import { drawCircle, drawLineCircle } from '../service/pixi';
 import { getRelativeX } from '../utils/constants';
-
-function AABB(block, circle) {
-  const bounds1 = block?.pixi.getBounds();
-  const bounds2 = circle.getBounds();
-
-  if (!bounds1) { return false; }
-
-  return bounds1.x < bounds2.x + bounds2.width
-    && bounds1.x + bounds1.width > bounds2.x
-    && bounds1.y < bounds2.y + bounds2.height
-    && bounds1.y + bounds1.height > bounds2.y;
-}
+import { collisionCircleAndRect } from '../service/collision';
 
 export class Duet {
   constructor(stage) {
@@ -41,7 +30,7 @@ export class Duet {
 
   collision(blocks) {
     for (const block of blocks) {
-      if (AABB(block, this.red) || AABB(block, this.blue)) {
+      if (collisionCircleAndRect(this.red, block) || collisionCircleAndRect(this.blue, block)) {
         return true;
       }
     }

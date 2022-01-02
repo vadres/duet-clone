@@ -18,8 +18,8 @@ export function drawCircle(image, width, x, y) {
   circle.acceleration = new PIXI.Point(0);
   circle.anchor.set(0);
   circle.mass = 1;
-  circle.vx = 0;
-  circle.vy = 0;
+  circle.pivot.x = width / 2;
+  circle.pivot.y = width / 2;
   return circle;
 }
 
