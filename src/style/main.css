@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    display: flex;
+   justify-content: center;  
+}
+
+.background {
+    background-color: rgb(54, 82, 134);
+  
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    width: 102%;
+    height: 103%;
+    position: absolute;
+    right: -10px;
+    top: -15px;
+}
+
+canvas {
+    z-index: 1000;
+    opacity: 0.9;
+}
