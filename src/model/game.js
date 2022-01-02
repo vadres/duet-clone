@@ -1,40 +1,40 @@
 import { 
-  spaceBetween,
-  blockWidth,
-  blockHeight,
- } from '../service/size';
+  getRelativeX
+ } from '../utils/constants';
+import constants from '../utils/constants';
 import { Duet } from '../model/duet';
 import { Block } from '../model/block';
 import { drawRect } from '../service/pixi';
 
 export class Game {
-  constructor(round, app) {
+  constructor(round, stage, ticker, renderer) {
     this.round = round;
     this.blocks = [];
-    this.elapsed = 30;
-    this.app = app;
+    this.elapsed = constants.ELAPSED_TICK;
+    this.stage = stage;
+    this.ticker = ticker;
+    this.renderer = renderer;
     this.isPlaying = true;
     this.duet = null;
   } 
 
   play() {
-    this.duet = new Duet(this.app);
+    this.duet = new Duet(this.stage);
 
     let line = 0;
     
-    this.app.ticker.add((delta) => {
+    this.ticker.add((delta) => {
+      this.renderer.render(this.stage);
       if (this.isPlaying) {
         this.isPlaying = !this.duet.collision(this.blocks);
         this.duet.move();
         this.elapsed++;
-        if (this.elapsed >= 30) {
+        if (this.elapsed >= constants.ELAPSED_TICK) {
           this.readBlocks(line);
           this.elapsed = 0;
         }
 
-        for (const block of this.blocks) {
-          if (block) block.pixi.y = block.pixi.y + Math.cos(0.0/40.0) * 6;
-        }
+        this.blocks.forEach(block => block.fall());
     
         this.resetPositions();
         line = line === this.round.length - 1? 0: line + 1;      
@@ -43,21 +43,20 @@ export class Game {
   }
 
   readBlocks(line) {  
-    console.log(line)
       const lineBlocks = this.round[line];
-      const positionY = this.getBlockLocation(line); 
+      const positionY = constants.INITIAL_POSITION; 
 
       for (let i = 0; i < lineBlocks.length; i++) {
         let width = 0;
-        let pos = i * blockWidth;
         while (lineBlocks[i] === '-') {
-          width += blockWidth;
+          width += constants.BLOCK_WIDTH;
           i++;
         }
+        let pos = getRelativeX(i * constants.BLOCK_WIDTH, width * 5);
         if (width > 0) {
           const block = new Block(drawRect(width, pos, positionY), line);
           this.blocks.push(block);
-          this.app.stage.addChild(block.pixi);
+          this.stage.addChild(block.pixi);
         }
 
       }   
@@ -67,7 +66,7 @@ export class Game {
     for (let i = 0; i < this.blocks.length; i++) {
       const block = this.blocks[i];
       if (block) {
-        if (block.pixi.y > window.innerHeight + spaceBetween) {
+        if (block.pixi.y > window.innerHeight) {
           block.pixi.destroy();
           delete this.blocks[i];
         }
@@ -75,13 +74,4 @@ export class Game {
     }
   }
 
-  getSizePhase() {
-    return ((this.round.length - 1) * spaceBetween) +
-      ((this.round.length - 1) * blockHeight);
-  }
-
-  getBlockLocation(line) {
-    return (spaceBetween * line) - (this.getSizePhase() - ((this.round.length - 1 - line) * spaceBetween) +
-      ((this.round.length - 1 - line) * blockHeight));
-  }
 }

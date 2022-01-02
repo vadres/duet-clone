@@ -1,14 +1,18 @@
-import round01 from "./data/round01";
+import "./resources/style/main.scss";
+import round01 from "./resources/rounds/round01";
 import { Game } from './model/game';
 
-export const app = new PIXI.Application({
-  width: 440,
+export const renderer = new PIXI.autoDetectRenderer({
+  width: window.innerWidth,
   height: window.innerHeight,
-  backgroundColor: 0x303030,
   resolution: window.devicePixelRatio || 1,
+  transparent: true
 }); 
 
-document.body.appendChild(app.view);
+let stage = new PIXI.Container();
+let ticker = PIXI.Ticker.shared;
 
-const game = new Game(round01, app);
-game.play();
+document.body.appendChild(renderer.view);
+
+const game = new Game(round01, stage, ticker, renderer);
+requestAnimationFrame(() => game.play());

@@ -1,5 +1,6 @@
-import { keyboard } from '../service/keyboard';
+import { keyboard } from '../utils/keyboard';
 import { drawCircle, drawLineCircle } from '../service/pixi';
+import { getRelativeX } from '../utils/constants';
 
 function AABB(block, circle) {
   const bounds1 = block?.pixi.getBounds();
@@ -14,21 +15,21 @@ function AABB(block, circle) {
 }
 
 export class Duet {
-  constructor(app) {
-    let lineCircle = drawLineCircle(75, 225, window.innerHeight - 185);
+  constructor(stage) {
+    let lineCircle = drawLineCircle(75, getRelativeX(225, 450), window.innerHeight - 185);
     let red = drawCircle('img/red.png', 30, 0, 0);
     let blue = drawCircle('img/blue.png', 30, 150, 0);
     let container = new PIXI.Container();
     container.addChild(blue);
     container.addChild(red);
 
-    container.x = 225;
+    container.x = getRelativeX(225, 450);
     container.y = window.innerHeight - 185;
     container.pivot.x = container.width / 2;
     container.pivot.y = container.height / 2;
 
-    app.stage.addChild(lineCircle);
-    app.stage.addChild(container);
+    stage.addChild(lineCircle);
+    stage.addChild(container);
 
     this.red = red;
     this.blue = blue;

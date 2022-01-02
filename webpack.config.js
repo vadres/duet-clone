@@ -18,6 +18,10 @@ module.exports = (env, options) => {
           use: 'json-loader'
         },
         {
+          test: /\.s[ac]ss$/i,
+          use: ["style-loader", "css-loader", "sass-loader"],
+        },
+        {
           test: /\.(png|jpe?g|gif)$/i,
           use: [
             {
@@ -30,7 +34,7 @@ module.exports = (env, options) => {
     plugins: [
       new CopyPlugin({
         patterns: [
-          { from: "img", to: "img" },
+          { from: "resources/img", to: "img" },
         ],
       }),      
     ],

@@ -1,10 +1,10 @@
-import { blockHeight } from "./size";
+import constants from "../utils/constants";
 
 export function drawRect(width, x, y) {
   const rect = new PIXI.Sprite(PIXI.Texture.WHITE);
   rect.position.set(x, y);
   rect.width = width;
-  rect.height = blockHeight;
+  rect.height = constants.BLOCK_HEIGHT;
   rect.acceleration = new PIXI.Point(0);
   rect.mass = 1;
   return rect;
