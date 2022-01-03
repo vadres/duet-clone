@@ -19,11 +19,17 @@ export class Game {
   } 
 
   play() {
+    let rect = drawRect(100, 120, 120);
+    this.stage.addChild(rect);
+
+
     this.duet = new Duet(this.stage);
 
     let line = 0;
     
     this.ticker.add((delta) => {
+      console.log({ x: rect.x, y: rect.y })
+      rect.rotation += Math.cos(delta) / 20;
       this.renderer.render(this.stage);
       if (this.isPlaying) {
         if (this.duet.collision(this.blocks)) {
@@ -70,10 +76,8 @@ export class Game {
       const block = this.blocks[i];
       if (block) {
         if (block.pixi.y > window.innerHeight) {
-          setTimeout (() => {
-            block.pixi.destroy();
-            delete this.blocks[i];
-          }, 3000);
+          block.pixi.destroy();
+          delete this.blocks[i];        
         }
       }
     }

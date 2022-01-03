@@ -29,7 +29,11 @@ export class Duet {
   }
 
   collision(blocks) {
-    for (const block of blocks) {
+    const prospects = blocks.filter(block => block.pixi.y > window.innerHeight - 225 && 
+                                                  block.pixi.y < window.innerHeight)
+      
+
+    for (const block of prospects) {
       if (collisionCircleAndRect(this.red, block) || collisionCircleAndRect(this.blue, block)) {
         return true;
       }
