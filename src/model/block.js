@@ -2,7 +2,7 @@ export class Block {
   constructor(pixi, line) {
     this.pixi = pixi
     this.line = line
-    this.speed = 4;
+    this.speed = 2;
   }
 
   fall() {

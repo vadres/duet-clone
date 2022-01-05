@@ -28,7 +28,6 @@ export class Game {
     let line = 0;
     
     this.ticker.add((delta) => {
-      console.log({ x: rect.x, y: rect.y })
       rect.rotation += Math.cos(delta) / 20;
       this.renderer.render(this.stage);
       if (this.isPlaying) {
@@ -40,12 +39,12 @@ export class Game {
           if (this.elapsed >= constants.ELAPSED_TICK) {
             this.readBlocks(line);
             this.elapsed = 0;
+            line = line === this.round.length - 1? 0: line + 1;     
           }
 
           this.blocks.forEach(block => block.fall());
       
-          this.resetPositions();
-          line = line === this.round.length - 1? 0: line + 1;     
+          this.resetPositions();         
         } 
       }
     });

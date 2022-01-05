@@ -14,6 +14,11 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
+        {
           test: /\.json$/,
           use: 'json-loader'
         },
@@ -30,6 +35,9 @@ module.exports = (env, options) => {
           ],
         },
       ]
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
       new CopyPlugin({
