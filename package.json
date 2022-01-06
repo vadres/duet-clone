@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/matter-js": "^0.17.6",
+    "@types/pixi.js": "^5.0.0",
     "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
     "file-loader": "^6.2.0",
@@ -24,7 +26,8 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.1"
   },
-  "dependencies": {
-    "matter-js": "^0.18.0"
+  "dependencies": {    
+    "matter-js": "^0.18.0",
+    "pixi.js": "^6.2.1"
   }
 }
