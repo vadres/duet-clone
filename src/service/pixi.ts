@@ -1,13 +1,13 @@
-import { Graphics, Sprite } from "pixi.js";
+import { Graphics, Point, Sprite, Texture } from "pixi.js";
 import constants from "../utils/constants";
 
 export function drawRect(x: number, y: number, width: number, height: number) {
-  const graphics = new Graphics();
-
-  graphics.beginFill(0xDDDDDD);  
-  graphics.drawRect(x, y, width, height);
-  
-  return graphics;
+  const rect = new Sprite(Texture.WHITE);
+  rect._tintRGB = 0xDDDDDD;
+  rect.position.set(x - width / 2, y - height / 2);
+  rect.width = width;
+  rect.height = height;
+  return rect;
 }
 
 export function drawCircle(image: string, x: number, y: number, radius: number) {
@@ -15,13 +15,10 @@ export function drawCircle(image: string, x: number, y: number, radius: number) 
   circle.position.set(x, y);
   circle.width = radius;
   circle.height = radius;
-  circle.anchor.set(0);
-  circle.pivot.x = radius / 2;
-  circle.pivot.y = radius / 2;
   return circle;
 }
 
-export function drawLineCircle(width: number, x: number, y: number) {
+export function drawLineCircle(x: number, y: number, width: number) {
   const graphics = new Graphics();
   graphics.lineStyle(2, 0xFEEBEE, 0.2);
   graphics.beginFill(0x000000, 0.1);

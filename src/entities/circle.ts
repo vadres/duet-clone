@@ -1,4 +1,4 @@
-import { Bodies } from "matter-js";
+import { Bodies, Body } from "matter-js";
 import { drawCircle, drawLineCircle } from "../service/pixi";
 import { AbstractMatter } from "./abstract-matter";
 
@@ -18,11 +18,15 @@ export class Circle extends AbstractMatter {
   }
 
   initImageCircle(input: CircleInput) {
-    this.matter = Bodies.circle(input.x, input.y, input.radius, input.options);
+    this.matter = Bodies.circle(input.x, input.y, input.radius / 2, input.options);
     this.view = drawCircle(input.image, input.x, input.y, input.radius);
   }
 
   initLineCircle(input: CircleInput) {
     this.view = drawLineCircle(input.x, input.y, input.radius);
+  }
+
+  update(): void {
+    Body.setPosition(this.matter, { x: this.view.x + this.view.width / 2, y: this.view.y + this.view.height / 2 });
   }
 }
