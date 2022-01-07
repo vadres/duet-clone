@@ -8,5 +8,4 @@ export class Block extends AbstractMatter {
     this.matter = Bodies.rectangle(x, y, width, height);
     this.view = drawRect(x - width / 2,y - height / 2 ,width,height);
   }
-
 }
