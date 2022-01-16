@@ -55,9 +55,9 @@ export class Duet {
         right = keyboard("ArrowRight"),
         down = keyboard("ArrowDown");
 
-    left.press = () => this.leftRotation += -.05;
+    left.press = () => this.leftRotation += -.055;
     left.release = () => this.leftRotation = 0;
-    right.press = () => this.rightRotation += .05;
+    right.press = () => this.rightRotation += .055;
     right.release = () => this.rightRotation = 0;
   }  
 }
